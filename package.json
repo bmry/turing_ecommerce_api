@@ -1,0 +1,19 @@
+{
+  "name": "turing-ecommerce-api",
+  "version": "1.0.0",
+  "description": "This is the  backend of an e-commerce system which allows users to search, add items to their shopping cart, create orders, and checkout successfully.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "turing-ecommerce-api"
+  },
+  "author": "Morayo Bamgbose",
+  "license": "ISC",
+  "dependencies": {
+    "app-module-path": "^2.2.0",
+    "express": "^4.16.4"
+  }
+}
