@@ -13,7 +13,9 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config/index");
 const actions = {},
-  model = new Customer();
+model = new Customer();
+
+
 
 actions.registerCustomer = async (req, res) => {
   let errorMessage;
