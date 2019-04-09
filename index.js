@@ -24,7 +24,8 @@ const rateLimit = require("express-rate-limit"); //Package to limit repeated req
 const hpkp = require("hpkp");
 const ninetyDaysInSeconds = 7776000;
 
-const customerService = require("components/customers");
+const customerService = require("Services/CustomerService");
+const orderService = require("Services/OrderService");
 
 const app = express();
 
@@ -103,6 +104,7 @@ function appServices(app) {
 //Function to handle the app routes
 function serviceRoutes(app) {
     app.use("/api/v1/customer", customerService);
+    app.use("/api/v1/order", orderService);
 }
 
 
