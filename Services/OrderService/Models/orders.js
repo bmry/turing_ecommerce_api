@@ -5,9 +5,9 @@ const sql = require("config/database");
 /**
  * @description - All database operations for orders
  *
- * @class Orders
+ * @class Order
  */
-class Orders {
+class Order {
   /**
    *
    * @description - GET all orders
@@ -85,4 +85,4 @@ class Orders {
   }
 }
 
-module.exports = Orders;
+module.exports = Order;
