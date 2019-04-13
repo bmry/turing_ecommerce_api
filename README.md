@@ -1,17 +1,30 @@
 # TURING E-ECOMMERCE BACKEND
 This is the backend of Turing's E-commerce System which ultimately allows users to the following
 
-1. *Search Item*
+   - *Search Item*
 
-2.  *Add Item To Shopping Cart*
+- *Add Item To Shopping Cart*
 
-3.  *Create Order*
+-  *Create Order*
 
-4.  *Checkout*
+-  *Checkout*
 
-5. *Make Payment*
+- *Make Payment*
 
 **DOCUMENTATION: https://documenter.getpostman.com/view/3466097/S1ENyJvT**
+
+
+**HOW TO INSTALL**
+   
+   -    Install Dependency
+    
+    yarn
+    
+  - Start application
+    
+   
+    yarn start   
+
 
 **ARCHITECTURE**
 
@@ -22,13 +35,13 @@ services that can be independently maintained, deployed and scale when the need 
 
 This application is made up of collection of services that work together.
 
-1. Customer Service
+- Customer Service
 
-2.  Order Service
+-  Order Service
 
-3.  Payment Service
+-  Payment Service
 
-4.  Product Service
+-  Product Service
 
 
 
