@@ -14,6 +14,7 @@ This is the backend of Turing's E-commerce System which ultimately allow to the 
 **DOCUMENTATION: https://documenter.getpostman.com/view/3466097/S1ENyJvT**
 
 **ARCHITECTURE**
+
 This application design has modeled the Microservice Architectural Style, therefore has been decomposed  into individual service
 services that can be independently maintained, deployed and scale when the need arises.
 
@@ -52,10 +53,10 @@ This application is made up of collection of services that work together.
 
 **SUPPORT FOR 1,000,000 ACTIVE USERS**
 
-This application has been built as a collection services so that they can independenly deployed.
-Each of these services would dockerised and each service deployed per container in the cloud such AWS.
+This application has been built as a collection services so that they can independenly deployed, maintained and scaled.
+Each of these services would be dockerised and each service deployed per container in a cloud infracstructure such as AWS ECS.
 
-To ensure High Availability of the services minimum of 2 instances of would be up at a given so that
+To ensure High Availability of the services minimum of 2 instances of would be up at a given time so that
 when one service is down the other would able to service customer request.
  
 This Application has been deployed on **AWS EC2 INSTANCE** with **AUTOSCALING SETTINGS** combined with **AWS ELASTIC LOADBALANCER**  so that service instances
