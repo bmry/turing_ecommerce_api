@@ -107,4 +107,4 @@ class Customer {
   }
 }
 
-module.exports = Customers;
+module.exports = Customer;

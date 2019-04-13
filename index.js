@@ -26,6 +26,9 @@ const ninetyDaysInSeconds = 7776000;
 
 const customerService = require("Services/CustomerService");
 const orderService = require("Services/OrderService");
+const productService = require("Services/ProductService");
+const shoppingCartService = require("Services/ShoppingCartService");
+const paymentService = require("Services/PaymentService");
 
 const app = express();
 
@@ -105,6 +108,9 @@ function appServices(app) {
 function serviceRoutes(app) {
     app.use("/api/v1/customer", customerService);
     app.use("/api/v1/order", orderService);
+    app.use("/api/v1/product", productService);
+    app.use("/api/v1/shoppingcart", shoppingCartService);
+    app.use("/api/v1/payment", paymentService);
 }
 
 

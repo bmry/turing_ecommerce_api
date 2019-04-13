@@ -7,7 +7,7 @@
 "use strict";
 
 const { validationResult } = require("express-validator/check");
-const Customers = require("../models/customer");
+const Customer = require("../models/customer");
 const logger = require("config/winston");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
