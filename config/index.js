@@ -5,7 +5,7 @@
 
  module.exports = {
          dbConfig: {
-        host: "test.cybagxslicqe.us-east-2.rds.amazonaws.com",
+            host: "test.cybagxslicqe.us-east-2.rds.amazonaws.com",
             user: "morayo",
             password: "morayo2019",
             database: "turing_database"
