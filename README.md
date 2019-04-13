@@ -58,7 +58,8 @@ This application has been built as a collection services so that they can indepe
 Each of these services would be dockerised and each service deployed per container in a cloud infracstructure such as AWS ECS.
 
 To ensure High Availability of the services minimum of 2 instances of would be up at a given time so that
-when one service is down the other would able to service customer request.
+when one service is down the other would able to service customer request while the container orchestration system spin a new instance to fulfil the
+autoscaling contract of minimum of 2 services at a given time.
  
 This Application has been deployed on **AWS EC2 INSTANCE** with **AUTOSCALING SETTINGS** combined with **AWS ELASTIC LOADBALANCER**  so that service instances
 can easily scale up and down depending number traffic hitting the services so that users request can be effeciently handled without delay.
