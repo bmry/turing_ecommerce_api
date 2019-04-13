@@ -72,4 +72,4 @@ Backup and Autoscaling.
 
 **SUPPORT FOR 50% AMERICAN ACTIVE USERS**
 
-I will deploy more instance of the API services in the American Region and taking of the **AWS ROUTE53** Geolocation Routing Policy,American users routed to the services in that region.
+I will deploy more instance of the API services in the American Region and using the **AWS ROUTE53** Geolocation Routing Policy,American users routed to the services in that region.
