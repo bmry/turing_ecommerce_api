@@ -1,15 +1,15 @@
 # TURING E-ECOMMERCE BACKEND
-This is the backend of Turing's E-commerce System which ultimately allow to the following
+This is the backend of Turing's E-commerce System which ultimately allows users to the following
 
-1. Search Item
+1. *Search Item*
 
-2.  Add Item To Shopping Cart
+2.  *Add Item To Shopping Cart*
 
-3.  Create Order
+3.  *Create Order*
 
-4.  Checkout
+4.  *Checkout*
 
-5. Make Payment
+5. *Make Payment*
 
 **DOCUMENTATION: https://documenter.getpostman.com/view/3466097/S1ENyJvT**
 
@@ -19,6 +19,7 @@ This application design has modeled the Microservice Architectural Style, theref
 services that can be independently maintained, deployed and scale when the need arises.
 
 **SERVICES**
+
 This application is made up of collection of services that work together.
 
 1. Customer Service
