@@ -5,10 +5,10 @@
 
  module.exports = {
          dbConfig: {
-            host: "test.cybagxslicqe.us-east-2.rds.amazonaws.com",
-            user: "morayo",
-            password: "morayo2019",
-            database: "turing_database"
+            host: "Database Host Here",
+            user: "Database User Name Here",
+            password: "Database Password Here",
+            database: "Database Name Here"
          },
          payment: {
                  secret_key: "sk_test_bgPK804aIawIKJk69MWaC9MO",
