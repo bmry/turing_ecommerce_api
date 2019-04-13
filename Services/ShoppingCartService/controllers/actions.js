@@ -7,7 +7,7 @@
 "use strict";
 
 const { validationResult } = require("express-validator/check");
-const ShoppingCart = require("../models/shoppingcart");
+const ShoppingCart = require("../Models/shoppingcart");
 const logger = require("config/winston");
 const actions = {},
   model = new ShoppingCart();
