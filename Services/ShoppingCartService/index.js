@@ -1,1 +1,1 @@
-module.exports = require("./Controllers/mappings");
+module.exports = require("./controllers/mappings");
