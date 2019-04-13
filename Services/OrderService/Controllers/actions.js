@@ -6,7 +6,7 @@
 
 "use strict";
 const { validationResult } = require("express-validator/check");
-const Orders = require("../models/orders.js");
+const Orders = require("../models/orders");
 const logger = require("config/winston");
 const actions = {},
   model = new Orders();
