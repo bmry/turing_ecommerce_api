@@ -11,14 +11,14 @@
             database: "Database Name Here"
          },
          payment: {
-                 secret_key: "sk_test_bgPK804aIawIKJk69MWaC9MO",
-                 publishable_key: "pk_test_QSrngND1gfPQBGT1a7MxJfSh"
+                 secret_key: "payment_secrek_key",
+                 publishable_key: "payment_publishable_key"
          },
          jwt: {
-                "secret": "turingChallenge2019"
+                "secret": "jwt_secret"
          },
          newrelic: {
-                 licenceKey: "605f2d8cb091d66c4b0c662afb6d36b2b6849825"
+                 licenceKey: "new_relic_license_key"
          }
  };
  
