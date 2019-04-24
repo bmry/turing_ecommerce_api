@@ -1,4 +1,4 @@
-"use strict";
+
 
 const sql = require("config/database");
 
@@ -18,7 +18,7 @@ class Product {
   getProducts(pageOptions, callback) {
     const { offset, limit } = pageOptions;
     const params = [limit, offset];
-    const query = `SELECT * FROM product LIMIT ? OFFSET ?`;
+    const query = "SELECT * FROM product LIMIT ? OFFSET ?";
     sql.query(query, params, (err, products) => {
       if (err) {
         return callback(err, null);
@@ -35,9 +35,11 @@ class Product {
    * @memberof Products
    */
   filterProducts(filterParams, callback) {
-    const { department_id, category_id, limit, offset } = filterParams;
+    const {
+      department_id, category_id, limit, offset,
+    } = filterParams;
     const params = [category_id || 1, department_id || 1, limit, offset];
-    const query = `SELECT * FROM product_category as PC JOIN product as P ON (PC.product_id = P.product_id) JOIN category as C ON (PC.category_id = C.category_id) JOIN department as D ON (C.department_id = D.department_id)  WHERE C.category_id = ? AND D.department_id = ? LIMIT ? OFFSET ?`;
+    const query = "SELECT * FROM product_category as PC JOIN product as P ON (PC.product_id = P.product_id) JOIN category as C ON (PC.category_id = C.category_id) JOIN department as D ON (C.department_id = D.department_id)  WHERE C.category_id = ? AND D.department_id = ? LIMIT ? OFFSET ?";
     sql.query(query, params, (err, products) => {
       if (err) {
         return callback(err, null);
@@ -56,7 +58,7 @@ class Product {
   searchProduct(filterParams, callback) {
     const { search_term, limit, offset } = filterParams;
     const params = [`${search_term}%`, limit, offset];
-    const query = `SELECT * FROM product WHERE name LIKE ? LIMIT ? OFFSET ?`;
+    const query = "SELECT * FROM product WHERE name LIKE ? LIMIT ? OFFSET ?";
     sql.query(query, params, (err, products) => {
       if (err) {
         return callback(err, null);
@@ -74,7 +76,7 @@ class Product {
    */
   getProduct(product_id, callback) {
     const params = [product_id];
-    const query = `SELECT * FROM product WHERE product_id = ?`;
+    const query = "SELECT * FROM product WHERE product_id = ?";
     sql.query(query, params, (err, product) => {
       if (err) {
         return callback(err, null);
@@ -92,7 +94,7 @@ class Product {
   getProductsCategory(filterParams, callback) {
     const { category_id, limit, offset } = filterParams;
     const params = [category_id, limit, offset];
-    const query = `SELECT * FROM product_category as PC JOIN product as P ON (PC.product_id = P.product_id) WHERE category_id = ? LIMIT ? OFFSET ?`;
+    const query = "SELECT * FROM product_category as PC JOIN product as P ON (PC.product_id = P.product_id) WHERE category_id = ? LIMIT ? OFFSET ?";
     sql.query(query, params, (err, products) => {
       if (err) {
         return callback(err, null);
@@ -111,7 +113,7 @@ class Product {
   getProductsDepartment(filterParams, callback) {
     const { department_id, limit, offset } = filterParams;
     const params = [department_id, limit, offset];
-    const query = `SELECT * FROM product_category as PC JOIN product as P ON (PC.product_id = P.product_id) JOIN category as C ON (PC.category_id = C.category_id) JOIN department as D ON (C.department_id = D.department_id)  WHERE D.department_id = ? LIMIT ? OFFSET ?`;
+    const query = "SELECT * FROM product_category as PC JOIN product as P ON (PC.product_id = P.product_id) JOIN category as C ON (PC.category_id = C.category_id) JOIN department as D ON (C.department_id = D.department_id)  WHERE D.department_id = ? LIMIT ? OFFSET ?";
     sql.query(query, params, (err, products) => {
       if (err) {
         return callback(err, null);
@@ -128,9 +130,11 @@ class Product {
    * @memberof Products
    */
   addProduct(productData, callback) {
-    const { name, description, price, image } = productData;
+    const {
+      name, description, price, image,
+    } = productData;
     const params = [name, description, price, image];
-    const query = `INSERT INTO product (name, description, price, image) VALUES (?, ?, ?, ?)`;
+    const query = "INSERT INTO product (name, description, price, image) VALUES (?, ?, ?, ?)";
     sql.query(query, params, (err, result) => {
       if (err) {
         return callback(err, null);
@@ -152,10 +156,10 @@ class Product {
       description,
       price,
       discounted_price,
-      product_id
+      product_id,
     } = productData;
     const params = [name, description, price, discounted_price, product_id];
-    const query = `UPDATE product SET name = ?, description = ?, price = ?, discounted_price = ? WHERE product_id = ?`;
+    const query = "UPDATE product SET name = ?, description = ?, price = ?, discounted_price = ? WHERE product_id = ?";
     sql.query(query, params, (err, result) => {
       if (err) {
         return callback(err, null);
@@ -173,7 +177,7 @@ class Product {
    */
   deleteProduct(product_id, callback) {
     const params = [product_id];
-    const query = `DELETE FROM product WHERE product_id = ?`;
+    const query = "DELETE FROM product WHERE product_id = ?";
     sql.query(query, params, (err, result) => {
       if (err) {
         return callback(err, null);
@@ -192,7 +196,7 @@ class Product {
   addCategory(categoryData, callback) {
     const { name, description, department_id } = categoryData;
     const params = [name, description, department_id];
-    const query = `INSERT INTO category (name, description, department_id) VALUES (?, ?, ?)`;
+    const query = "INSERT INTO category (name, description, department_id) VALUES (?, ?, ?)";
     sql.query(query, params, (err, result) => {
       if (err) {
         return callback(err, null);
@@ -209,9 +213,11 @@ class Product {
    * @memberof Products
    */
   editCategory(categoryData, callback) {
-    const { name, description, department_id, category_id } = categoryData;
+    const {
+      name, description, department_id, category_id,
+    } = categoryData;
     const params = [name, description, department_id, category_id];
-    const query = `UPDATE category SET name = ?, description = ?, department_id = ? WHERE category_id = ?`;
+    const query = "UPDATE category SET name = ?, description = ?, department_id = ? WHERE category_id = ?";
     sql.query(query, params, (err, result) => {
       if (err) {
         return callback(err, null);
@@ -229,7 +235,7 @@ class Product {
    */
   deleteCategory(category_d, callback) {
     const params = [category_d];
-    const query = `DELETE FROM category WHERE category_id = ?`;
+    const query = "DELETE FROM category WHERE category_id = ?";
     sql.query(query, params, (err, result) => {
       if (err) {
         return callback(err, null);
@@ -248,7 +254,7 @@ class Product {
   addDepartment(departmentData, callback) {
     const { name, description } = departmentData;
     const params = [name, description];
-    const query = `INSERT INTO department (name, description) VALUES (?, ?)`;
+    const query = "INSERT INTO department (name, description) VALUES (?, ?)";
     sql.query(query, params, (err, result) => {
       if (err) {
         return callback(err, null);
@@ -267,7 +273,7 @@ class Product {
   editDepartment(departmentData, callback) {
     const { name, description, department_id } = departmentData;
     const params = [name, description, department_id];
-    const query = `UPDATE department SET name = ?, description = ? WHERE department_id = ?`;
+    const query = "UPDATE department SET name = ?, description = ? WHERE department_id = ?";
     sql.query(query, params, (err, result) => {
       if (err) {
         return callback(err, null);
@@ -285,7 +291,7 @@ class Product {
    */
   deleteDepartment(departmentId, callback) {
     const params = [departmentId];
-    const query = `DELETE FROM department WHERE department_id = ?`;
+    const query = "DELETE FROM department WHERE department_id = ?";
     sql.query(query, params, (err, result) => {
       if (err) {
         return callback(err, null);
@@ -303,29 +309,27 @@ class Product {
    */
   addAttribute(name, callback) {
     const params = [name];
-    const query = `INSERT INTO attribute (name) VALUES (?)`;
+    const query = "INSERT INTO attribute (name) VALUES (?)";
 
-    //check if the attribute already exist in the database
-    const checkQuery = `SELECT name FROM attribute WHERE name = ?`;
+    // check if the attribute already exist in the database
+    const checkQuery = "SELECT name FROM attribute WHERE name = ?";
     sql.query(checkQuery, name, (err, result) => {
       if (err) {
         return callback(err, null);
-      } else if (result.length > 0) {
-        //if it finds a matching email address
+      } if (result.length > 0) {
+        // if it finds a matching email address
         return callback(err, null, false);
-      } else {
-        //perform the insert query
-        const query = `INSERT INTO attribute (name) VALUES (?)`;
-        sql.query(query, params, (err, attribute) => {
-          if (err) {
-            console.log({ err });
-            return callback(err, null);
-          }
-          return callback(null, attribute, true);
-        });
       }
+      // perform the insert query
+      const query = "INSERT INTO attribute (name) VALUES (?)";
+      sql.query(query, params, (err, attribute) => {
+        if (err) {
+          console.log({ err });
+          return callback(err, null);
+        }
+        return callback(null, attribute, true);
+      });
     });
-
   }
 
   /**
@@ -338,7 +342,7 @@ class Product {
   editAttribute(options, callback) {
     const { name, attribute_id } = options;
     const params = [name, attribute_id];
-    const query = `UPDATE attribute SET name = ? WHERE attribute_id = ?`;
+    const query = "UPDATE attribute SET name = ? WHERE attribute_id = ?";
     sql.query(query, params, (err, result) => {
       if (err) {
         return callback(err, null);
@@ -356,7 +360,7 @@ class Product {
    */
   deleteAttribute(attribute_id, callback) {
     const params = [attribute_id];
-    const query = `DELETE FROM attribute WHERE attribute_id = ?`;
+    const query = "DELETE FROM attribute WHERE attribute_id = ?";
     sql.query(query, params, (err, result) => {
       if (err) {
         return callback(err, null);
@@ -375,7 +379,7 @@ class Product {
   getProductAttributes(param, callback) {
     const { product_id, attribute_id } = param;
     const params = [product_id, attribute_id];
-    const query = `SELECT * FROM product as P JOIN product_attribute as PA ON (P.product_id = PA.product_id) JOIN attribute as A ON (A.attribute_id = PA.attribute_value_id) WHERE P.product_id = ? AND A.attribute_id = ?`;
+    const query = "SELECT * FROM product as P JOIN product_attribute as PA ON (P.product_id = PA.product_id) JOIN attribute as A ON (A.attribute_id = PA.attribute_value_id) WHERE P.product_id = ? AND A.attribute_id = ?";
     sql.query(query, params, (err, result) => {
       if (err) {
         return callback(err, null);

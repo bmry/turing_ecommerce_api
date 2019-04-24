@@ -1,20 +1,19 @@
 
-"use strict";
 
 const jwt = require("jsonwebtoken");
 const config = require("../config");
 
-//Check to make sure header is not undefined, if so, return Forbidden (403).
-//If authorization is set, verify it, then move to the next middleware available
+// Check to make sure header is not undefined, if so, return Forbidden (403).
+// If authorization is set, verify it, then move to the next middleware available
 const checkAndVerifyToken = (req, res, next) => {
-  const header = req.headers["authorization"];
+  const header = req.headers.authorization;
 
   if (typeof header !== "undefined") {
     const bearer = header.split(" ");
     const token = bearer[1];
 
     req.token = token;
-    jwt.verify(token, config.jwt.secret, function(err, decoded) {
+    jwt.verify(token, config.jwt.secret, (err, decoded) => {
       if (err) {
         return res
           .status(500)
@@ -24,12 +23,12 @@ const checkAndVerifyToken = (req, res, next) => {
       next();
     });
   } else {
-    //If header is undefined return Forbidden (403)
+    // If header is undefined return Forbidden (403)
     res.status(403).json({
       auth: false,
       success: false,
       message: "Unauthorized Access. Please log in",
-      token: null
+      token: null,
     });
   }
 };

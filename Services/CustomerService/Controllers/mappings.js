@@ -5,7 +5,6 @@
  * all the customer route.
  */
 
-"use strict";
 
 const router = require("express").Router({ mergeParams: true });
 const validator = require("utils/validators");
@@ -14,18 +13,18 @@ const { catchError } = require("utils/handlers");
 const actions = require("./actions");
 
 router.post(
-  "/register",
+  "/",
   validator.validateNewCustomer,
-  actions.registerCustomer
+  actions.registerCustomer,
 );
 
 router.post("/login", validator.validateLogin, actions.login);
 
 router.put(
-  "/updateProfile",
+  "/:customer_id([0-9]+)",
   validator.validateUpdateProfile,
   checkAndVerifyToken,
-  actions.updateProfile
+  actions.updateProfile,
 );
 
 router.post("/token_", validator.validateLogin, actions.getToken);

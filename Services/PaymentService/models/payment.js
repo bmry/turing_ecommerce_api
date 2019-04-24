@@ -1,5 +1,4 @@
 
-"use strict";
 
 const sql = require("config/database");
 
@@ -9,7 +8,6 @@ const sql = require("config/database");
  * @class Payment
  */
 class Payment {
-
 /**
  *
  *
@@ -17,10 +15,12 @@ class Payment {
  * @param {function} callback
  * @memberof Payment
  */
-charge(options, callback) {
-    const { amount, currency, order_id, customer_id } = options;
+  charge(options, callback) {
+    const {
+      amount, currency, order_id, customer_id,
+    } = options;
     const params = [amount, currency, order_id, customer_id];
-    const query = `INSERT into payments (amount, currency, order_id, customer_id) VALUES (?, ?, ?, ?)`;
+    const query = "INSERT into payments (amount, currency, order_id, customer_id) VALUES (?, ?, ?, ?)";
     sql.query(query, params, (err, result) => {
       if (err) {
         return callback(err, null);

@@ -5,7 +5,6 @@
  * all the payment route.
  */
 
-"use strict";
 
 const router = require("express").Router({ mergeParams: true });
 const validator = require("utils/validators");
@@ -16,7 +15,7 @@ router.post(
   "/charge",
   validator.validateNewPayment,
   checkAndVerifyToken,
-  actions.makePayment
+  actions.makePayment,
 );
 
 module.exports = router;

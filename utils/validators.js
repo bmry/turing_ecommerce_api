@@ -1,4 +1,4 @@
-"use strict";
+
 
 const { check } = require("express-validator/check");
 
@@ -22,13 +22,13 @@ export const validateNewCustomer = [
 
   check(
     "password",
-    "passwords must be at least 3 chars long and contain one number"
+    "passwords must be at least 3 chars long and contain one number",
   )
     .exists()
     .not()
     .isEmpty()
     .isLength({ min: 3 })
-    .matches(/\d/)
+    .matches(/\d/),
 ];
 
 export const validateUpdateProfile = [
@@ -75,7 +75,7 @@ export const validateUpdateProfile = [
     .isEmpty()
     .withMessage("Please provide a phone number")
     .isNumeric()
-    .withMessage("Phone number should be numeric")
+    .withMessage("Phone number should be numeric"),
 ];
 
 export const validateNewDepartment = [
@@ -84,7 +84,7 @@ export const validateNewDepartment = [
     .isEmpty()
     .withMessage("Description name cannot be empty")
     .trim()
-    .escape()
+    .escape(),
 ];
 
 export const validateNewAttribute = [
@@ -93,7 +93,7 @@ export const validateNewAttribute = [
     .isEmpty()
     .withMessage("Attribute name cannot be empty")
     .trim()
-    .escape()
+    .escape(),
 ];
 
 export const validateNewProduct = [
@@ -117,7 +117,7 @@ export const validateNewProduct = [
 
   check("display")
     .isInt()
-    .withMessage("Display must be an Integer")
+    .withMessage("Display must be an Integer"),
 ];
 
 export const validateNewOrder = [
@@ -127,19 +127,50 @@ export const validateNewOrder = [
     .isNumeric()
     .withMessage("Total amount should be numeric"),
 
-    check("shipping_id")
+  check("shipping_id")
     .not()
     .isEmpty()
     .isNumeric()
-    .withMessage("Shipping ID should be numeric")
+    .withMessage("Shipping ID should be numeric"),
+];
+
+export const validateNewOrderDetails = [
+  check("order_id")
+    .not()
+    .isEmpty()
+    .isNumeric()
+    .withMessage("Order ID should be numeric"),
+
+    check("product_name")
+    .not()
+    .isEmpty()
+    .withMessage("Product name must be provided"),
+
+  check("product_id")
+    .not()
+    .isEmpty()
+    .isNumeric()
+    .withMessage("Product ID should be numeric"),
+
+    check("quantity")
+    .not()
+    .isEmpty()
+    .isNumeric()
+    .withMessage("Quantity should be numeric"),
+
+    check("unit_cost")
+    .not()
+    .isEmpty()
+    .isDecimal()
+    .withMessage("Unit Cost should be decimal"),
 ];
 
 export const validateNewShippingRegion = [
   check("shipping_region")
     .isAlphanumeric()
     .withMessage(
-      "Shipping region must be only alphabetical and numeric characaters"
-    )
+      "Shipping region must be only alphabetical and numeric characaters",
+    ),
 ];
 
 export const validateLogin = [
@@ -152,7 +183,7 @@ export const validateLogin = [
     .isAlphanumeric()
     .withMessage("Password must be alphanumeric characters.")
     .isLength({ min: 3 })
-    .withMessage("Password must be at least 3 characters long")
+    .withMessage("Password must be at least 3 characters long"),
 ];
 
 export const validateSearchTerm = [
@@ -160,7 +191,7 @@ export const validateSearchTerm = [
     .toString()
     .not()
     .isEmpty()
-    .withMessage("Search term must be provided")
+    .withMessage("Search term must be provided"),
 ];
 
 export const validateGetProductItem = [
@@ -169,7 +200,7 @@ export const validateGetProductItem = [
     .withMessage("Product item must be an integer")
     .not()
     .isEmpty()
-    .withMessage("Product item is required")
+    .withMessage("Product item is required"),
 ];
 
 export const validateNewItem = [
@@ -206,7 +237,7 @@ export const validateNewItem = [
     .withMessage("`Buy now` must be an integer")
     .not()
     .isEmpty()
-    .withMessage("`Buy now` field is required")
+    .withMessage("`Buy now` field is required"),
 ];
 
 export const validateNewPayment = [
@@ -226,7 +257,7 @@ export const validateNewPayment = [
     .isEmpty()
     .withMessage("Please enter an order ID")
     .isNumeric()
-    .withMessage("Order ID should be numeric")
+    .withMessage("Order ID should be numeric"),
 ];
 
 export const validateEditProduct = [
@@ -244,7 +275,7 @@ export const validateEditProduct = [
 
   check("discounted_price")
     .isNumeric()
-    .withMessage("Discounted price must be an integer")
+    .withMessage("Discounted price must be an integer"),
 ];
 
 export const validateEditDepartment = [
@@ -254,36 +285,36 @@ export const validateEditDepartment = [
 
   check("description")
     .isString()
-    .withMessage("Descrition must be a string")
+    .withMessage("Descrition must be a string"),
 ];
 
 export const validateEditAttribute = [
   check("name")
     .isString()
-    .withMessage("Name must be a string")
+    .withMessage("Name must be a string"),
 ];
 
 export const validateDeleteDepartment = [
   check("department_id")
-  .isNumeric()
-  .withMessage("Product department ID must be an integer")
+    .isNumeric()
+    .withMessage("Product department ID must be an integer"),
 ];
 
 
 export const validateProductAttributes = [
   check("attribute_id")
-  .isNumeric()
-  .withMessage("Attribute ID must be an integer"),
+    .isNumeric()
+    .withMessage("Attribute ID must be an integer"),
 
   check("product_id")
-  .isNumeric()
-  .withMessage("Product ID must be an integer")
+    .isNumeric()
+    .withMessage("Product ID must be an integer"),
 ];
 
 export const validateDeleteAttribute = [
   check("attribute_id")
-  .isNumeric()
-  .withMessage("Attribute ID must be an integer")
+    .isNumeric()
+    .withMessage("Attribute ID must be an integer"),
 ];
 
 export const validateEditCategory = [
@@ -297,39 +328,46 @@ export const validateEditCategory = [
 
   check("department_id")
     .isNumeric()
-    .withMessage("Department ID must be an integer")
+    .withMessage("Department ID must be an integer"),
 ];
 
 export const validateDeleteProduct = [
   check("product_id")
-  .isNumeric()
-  .withMessage("Product ID must be an integer")
+    .isNumeric()
+    .withMessage("Product ID must be an integer"),
 ];
 
 export const validateCancelOrder = [
   check("order_id")
-  .isNumeric()
-  .withMessage("Order ID must be an integer")
+    .isNumeric()
+    .withMessage("Order ID must be an integer"),
 ];
 
 export const validateDeleteCategory = [
   check("category_id")
-  .isNumeric()
-  .withMessage("Category ID must be an integer")
+    .isNumeric()
+    .withMessage("Category ID must be an integer"),
 ];
 
 export const validateAddCategory = [
   check("name")
-  .isString()
-  .withMessage("Name must be a string"),
+    .isString()
+    .withMessage("Name must be a string"),
 
   check("description")
-  .isString()
-  .withMessage("Description must be a string"),
+    .isString()
+    .withMessage("Description must be a string"),
 
   check("department_id")
-  .isNumeric()
-  .withMessage("Department ID must be an integer")
+    .isNumeric()
+    .withMessage("Department ID must be an integer"),
+];
+
+export const validateSendOrderDetails = [
+  check("customer_email")
+    .isEmail()
+    .withMessage("Customer email must be a valid email address"),
+
 ];
 
 // export const validateStatus = [

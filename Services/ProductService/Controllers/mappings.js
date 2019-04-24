@@ -5,96 +5,95 @@
  * all the product {item} route.
  */
 
-"use strict";
 
 const router = require("express").Router({ mergeParams: true });
 const validator = require("utils/validators");
 const { catchError } = require("utils/handlers");
-const actions = require("./actions");
 const cache = require("utils/cache");
+const actions = require("./actions");
 
-router.get("/getProducts", cache, actions.getProducts);
+router.get("/", cache, actions.getProducts);
 
-router.get("/filterProducts", cache, actions.filterProducts);
+router.get("/filter", cache, actions.filterProducts);
 
 router.get(
-  "/searchProducts",
+  "/search",
   validator.validateSearchTerm,
-  actions.searchProducts
+  actions.searchProducts,
 );
 
-router.get("/getProduct/:product_id([0-9]+)", cache, actions.getProduct);
+router.get("/:product_id([0-9]+)", cache, actions.getProduct);
 
 router.get(
   "/inCategory/:category_id([0-9]+)",
   cache,
-  actions.getProductsCategory
+  actions.getProductsCategory,
 );
 
 router.get(
   "/inDepartment/:department_id([0-9]+)",
   cache,
-  actions.getProductsDepartment
+  actions.getProductsDepartment,
 );
 
 router.put(
-  "/editProduct/:product_id([0-9]+)",
+  "/edit/:product_id([0-9]+)",
   validator.validateEditProduct,
-  actions.editProduct
+  actions.editProduct,
 );
 
 router.delete(
   "/deleteProduct/:product_id([0-9]+)",
   validator.validateDeleteProduct,
-  actions.deleteProduct
+  actions.deleteProduct,
 );
 
 router.put(
   "/editCategory/:category_id([0-9]+)",
   validator.validateEditCategory,
-  actions.editCategory
+  actions.editCategory,
 );
 
 router.delete(
   "/deleteCategory/:category_id([0-9]+)",
   validator.validateDeleteCategory,
-  actions.deleteCategory
+  actions.deleteCategory,
 );
 
 router.put(
   "/editDepartment/:department_id([0-9]+)",
   validator.validateEditDepartment,
-  actions.editDepartment
+  actions.editDepartment,
 );
 
 router.delete(
   "/deleteDepartment/:department_id([0-9]+)",
   validator.validateDeleteDepartment,
-  actions.deleteDepartment
+  actions.deleteDepartment,
 );
 
 router.post(
   "/addAttribute",
   validator.validateNewAttribute,
-  actions.addAttribute
+  actions.addAttribute,
 );
 
 router.put(
   "/editAttribute/:attribute_id",
   validator.validateEditAttribute,
-  actions.editAttribute
+  actions.editAttribute,
 );
 
 router.delete(
   "/deleteAttribute/:attribute_id",
   validator.validateDeleteAttribute,
-  actions.deleteAttribute
+  actions.deleteAttribute,
 );
 
 router.get(
   "/getProductAttributes",
   validator.validateProductAttributes,
-  actions.getProductAttributes
+  actions.getProductAttributes,
 );
 
 module.exports = router;

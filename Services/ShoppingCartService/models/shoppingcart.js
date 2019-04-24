@@ -1,4 +1,4 @@
-"use strict";
+
 
 const sql = require("config/database");
 
@@ -17,7 +17,7 @@ class ShoppingCart {
       attributes,
       quantity,
       buy_now,
-      added_on
+      added_on,
     } = newItem;
     const params = [
       cart_id,
@@ -25,9 +25,9 @@ class ShoppingCart {
       attributes,
       quantity,
       buy_now,
-      added_on
+      added_on,
     ];
-    const query = `INSERT INTO shopping_cart (cart_id, product_id, attributes, quantity, buy_now, added_on) VALUES (?, ?, ?, ?, ?, ?)`;
+    const query = "INSERT INTO shopping_cart (cart_id, product_id, attributes, quantity, buy_now, added_on) VALUES (?, ?, ?, ?, ?, ?)";
     sql.query(query, params, (err, result) => {
       if (err) {
         return callback(err, null);
@@ -45,7 +45,7 @@ class ShoppingCart {
    */
   shoppingCartProducts(cart_id, callback) {
     const params = [cart_id];
-    const query = `SELEECT * FROM shopping_cart as SC JOIN product as P ON (SC.product_id = P.product_id) WHERE cart_id = ?`;
+    const query = "SELEECT * FROM shopping_cart as SC JOIN product as P ON (SC.product_id = P.product_id) WHERE cart_id = ?";
     sql.query(query, params, (err, products) => {
       if (err) {
         return callback(err, null);
@@ -57,13 +57,13 @@ class ShoppingCart {
   /**
    *
    *@description - Delete an order from the shopping cart
-   * @param {number} order_id
+   * @param {number} item_id
    * @param {function} callback
    * @memberof Products
    */
-  deleteOrder(item_id, callback) {
-    const params = [item_id];
-    const query = `DELETE FROM shopping_cart WHERE item_id = ?`;
+  emptyUnusedCart(callback) {
+    const params = [];
+    const query = "DELETE FROM shopping_cart WHERE DATEDIFF(CURRENT_DATE, added_on ) > 1";
     sql.query(query, params, (err, result) => {
       if (err) {
         return callback(err, null);

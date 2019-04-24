@@ -1,6 +1,6 @@
 const log = require("metalogger")();
 
-exports.setupErrorHandling = app => {
+exports.setupErrorHandling = (app) => {
   // Custom formatting for error responses.
   app.use((err, req, res, next) => {
     if (err) {
@@ -30,11 +30,7 @@ exports.setupErrorHandling = app => {
  * @param {Function} func
  * @returns a function
  */
-exports.catchError = func => {
-  return (req, res, next) => {
-    return func(req, res, next).catch(next);
-  };
-};
+exports.catchError = func => (req, res, next) => func(req, res, next).catch(next);
 
 /**
  *
@@ -51,8 +47,8 @@ exports.developmentErrors = (err, req, res, next) => {
     status: err.status,
     stackHighlighted: err.stack.replace(
       /[a-z_-\d]+.js:\d+:\d+/gi,
-      "<mark>$&</mark>"
-    )
+      "<mark>$&</mark>",
+    ),
   };
   res.status(err.status || 500);
   res.format({
@@ -60,10 +56,10 @@ exports.developmentErrors = (err, req, res, next) => {
     "text/json": () => {
       res.json({
         message: err.message,
-        error: {}
+        error: {},
       });
     }, // Form Submit, Reload the page
-    "application/json": () => res.json(errorDetails) // Ajax call, send JSON back
+    "application/json": () => res.json(errorDetails), // Ajax call, send JSON back
   });
 };
 
@@ -79,8 +75,8 @@ exports.productionErrors = (err, req, res, next) => {
   res.status(err.status || 500);
   res.json({
     message: err.message,
-    error: {}
+    error: {},
   });
 };
 
-//module.exports = setupErrorHandling;
+// module.exports = setupErrorHandling;

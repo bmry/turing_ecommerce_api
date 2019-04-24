@@ -2,23 +2,24 @@
  * index.js
  * This file contains configurations of the application
  */
+require('dotenv').config();
 
- module.exports = {
-         dbConfig: {
-            host: "Database Host Here",
-            user: "Database User Name Here",
-            password: "Database Password Here",
-            database: "Database Name Here"
-         },
-         payment: {
-                 secret_key: "payment_secrek_key",
-                 publishable_key: "payment_publishable_key"
-         },
-         jwt: {
-                "secret": "jwt_secret"
-         },
-         newrelic: {
-                 licenceKey: "new_relic_license_key"
-         }
- };
+module.exports = {
+    dbConfig: {
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: "",
+        database: process.env.DB_NAME,
+    },
+    payment: {
+        secret_key: process.env.PAYMENT_SECRET_KEY,
+        publishable_key: process.env.PAYMENT_PUBLISHABLE_KEY,
+    },
+    jwt: {
+        "secret": process.env.JWT_SECRET,
+    },
+    newrelic: {
+        licenceKey: process.env.NEW_RELIC_LICENCE_KEY,
+    }
+};
  
