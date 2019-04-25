@@ -8,6 +8,7 @@
 const { validationResult } = require("express-validator/check");
 const logger = require("config/winston");
 const ShoppingCart = require("../models/shoppingcart");
+const uuid = require('uuid/v1');
 
 const actions = {};
 const model = new ShoppingCart();
@@ -32,10 +33,13 @@ actions.addToCart = (req, res) => {
           message: err.sqlMessage,
         });
       }
-      res.status(201).json({
-        success: true,
-        message: "Item added successfully",
-      });
+        model.shoppingCartProducts(req.body.cart_id,(err, cart_info) => {
+            res.status(200).json({
+                success: true,
+                cart_info,
+                message: "Item added successfully",
+            });
+        });
     });
   } else {
     res.status(400).json({
@@ -46,9 +50,10 @@ actions.addToCart = (req, res) => {
   }
 };
 
+
+
 // Empty cart
 actions.emptyUnusedCart = (req, res) => {
-    let errorMessage;
     const errors = validationResult(req)
         .array()
         .map((error) => {
@@ -84,5 +89,14 @@ actions.emptyUnusedCart = (req, res) => {
         });
         logger.error(errorMessage);
     }
+
 };
+
+actions.generateUniqueId = (req, res) => {
+    const cart_id = uuid()
+    res.status(200).json({
+        cart_id: cart_id
+    })
+};
+
 module.exports = actions;

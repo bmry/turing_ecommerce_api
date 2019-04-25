@@ -45,12 +45,14 @@ class ShoppingCart {
    */
   shoppingCartProducts(cart_id, callback) {
     const params = [cart_id];
-    const query = "SELEECT * FROM shopping_cart as SC JOIN product as P ON (SC.product_id = P.product_id) WHERE cart_id = ?";
-    sql.query(query, params, (err, products) => {
+    const query = "SELECT * FROM shopping_cart as SC JOIN product as P ON (SC.product_id = P.product_id) WHERE cart_id = ? ORDER BY item_id DESC";
+    sql.query(query, params, (err, result) => {
       if (err) {
+        console.log(err);
         return callback(err, null);
       }
-      return callback(null, products);
+      console.log(result);
+      return callback(null, result);
     });
   }
 

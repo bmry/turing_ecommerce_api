@@ -132,6 +132,12 @@ export const validateNewOrder = [
     .isEmpty()
     .isNumeric()
     .withMessage("Shipping ID should be numeric"),
+
+    check("tax_id")
+    .not()
+    .isEmpty()
+    .isNumeric()
+    .withMessage("Tax ID should be numeric"),
 ];
 
 export const validateNewOrderDetails = [
@@ -204,13 +210,6 @@ export const validateGetProductItem = [
 ];
 
 export const validateNewItem = [
-  check("cart_id")
-    .isNumeric()
-    .withMessage("Cart ID must be an integer")
-    .not()
-    .isEmpty()
-    .withMessage("Cart ID cannot be empty"),
-
   check("product_id")
     .isNumeric()
     .withMessage("Product ID must be an integer")
@@ -341,6 +340,16 @@ export const validateCancelOrder = [
   check("order_id")
     .isNumeric()
     .withMessage("Order ID must be an integer"),
+];
+
+export const validateUpdateOrderStatus = [
+  check("order_id")
+    .isNumeric()
+    .withMessage("Order ID must be an integer"),
+
+    check("status")
+    .isString().optional('paid','pending')
+    .withMessage("Status must be a string"),
 ];
 
 export const validateDeleteCategory = [

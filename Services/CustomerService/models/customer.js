@@ -76,7 +76,7 @@ class Customer {
    * @param {function} callback
    * @memberof Customers
    */
-  updateProfile(customer_id, data, callback) {
+  updateProfile(data, callback) {
     const {
       address_1,
       city,
@@ -85,6 +85,7 @@ class Customer {
       country,
       shipping_region_id,
       day_phone,
+      customer_id
     } = data;
     const params = [
       address_1,
@@ -94,13 +95,14 @@ class Customer {
       country,
       shipping_region_id,
       day_phone,
-      customer_id,
+      customer_id
     ];
     const query = "UPDATE customer SET address_1 = ?, city = ?, region = ?, postal_code = ?, country = ?, shipping_region_id = ?, day_phone = ? WHERE customer_id = ?";
     sql.query(query, params, (err, result) => {
       if (err) {
         return callback(err, null);
       }
+
       return callback(null, result);
     });
   }
@@ -108,19 +110,35 @@ class Customer {
 
     /**
      * @description - GET all products in a category
-     * @param {object} param
+     * @param {object} params
      * @param {function} callback
      * @memberof Customer
      */
-    getSingleCustomer(param, callback) {
-        const { customer_id } = param;
-        const params = [customer_id];
+    getSingleCustomerById(data, callback) {
+        const params = [data];
         const query = "SELECT * FROM customer WHERE customer_id = ?";
         sql.query(query, params, (err, customer) => {
             if (err) {
                 return callback(err, null);
             }
-            return callback(null, customer, customer.length);
+            return callback(null, customer);
+        });
+    }
+
+    /**
+     * @description - GET all products in a category
+     * @param {object} param
+     * @param {function} callback
+     * @memberof Customer
+     */
+    getSingleCustomerByEmail(params, callback) {
+      console.log(params);
+        const query = "SELECT * FROM customer WHERE email = ?";
+        sql.query(query, params, (err, customer) => {
+            if (err) {
+                return callback(err, null);
+            }
+            return callback(null, customer);
         });
     }
 

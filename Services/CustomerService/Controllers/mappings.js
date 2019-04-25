@@ -21,7 +21,7 @@ router.post(
 router.post("/login", validator.validateLogin, actions.login);
 
 router.put(
-  "/:customer_id([0-9]+)",
+  "/",
   validator.validateUpdateProfile,
   checkAndVerifyToken,
   actions.updateProfile,

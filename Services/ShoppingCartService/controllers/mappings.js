@@ -16,4 +16,6 @@ router.post("/addToCart", validator.validateNewItem, actions.addToCart);
 
 router.get("/emptyUnusedCart",checkAndVerifyToken, actions.emptyUnusedCart);
 
+router.get("/generateUniqueId", checkAndVerifyToken, actions.generateUniqueId);
+
 module.exports = router;

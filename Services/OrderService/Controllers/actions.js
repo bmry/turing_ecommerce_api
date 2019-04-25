@@ -208,6 +208,7 @@ actions.addOrder = (req, res) => {
   req.body.created = new Date();
   req.body.reference = generate_random_string(5);
   req.body.customer_id = req.decoded.id;
+  console.log(req.body);
   if (errors.length < 1) {
     model.addOrder(req.body, (err, result) => {
       if (err) {
@@ -217,10 +218,14 @@ actions.addOrder = (req, res) => {
           message: err.sqlMessage,
         });
       }
-      res.status(201).json({
-        success: true,
-        message: "Order created successfully",
-      });
+        model.getOrder(result.insertId,(err, order) => {
+            res.status(201).json({
+                success: true,
+                order,
+                message: "Order created successfully",
+            });
+        });
+
     });
   } else {
     res.status(400).json({
@@ -230,6 +235,42 @@ actions.addOrder = (req, res) => {
     logger.error(errorMessage);
   }
 };
+
+actions.updateOrderStatus = (req, res) => {
+    let errorMessage;
+    const errors = validationResult(req)
+        .array()
+        .map((error) => {
+            errorMessage = error.msg;
+        });
+
+    if (errors.length < 1) {
+        model.updateOrderStatus(req.body, (err, message) => {
+            if (err) {
+                logger.error(err.sqlMessage);
+                return res.status(500).json({
+                    success: false,
+                    auth: false,
+                    message: err.sqlMessage,
+                });
+            }
+            model.getOrder(req.body.order_id,(err, order) => {
+                res.status(200).json({
+                    success: true,
+                    message: order,
+                });
+            });
+        });
+    } else {
+        res.status(400).json({
+            success: false,
+            message: errorMessage,
+        });
+        logger.error(errorMessage);
+    }
+};
+
+
 
 actions.addOrderDetails = (req, res) => {
   let errorMessage;
@@ -261,5 +302,7 @@ actions.addOrderDetails = (req, res) => {
     logger.error(errorMessage);
   }
 };
+
+
 
 module.exports = actions;

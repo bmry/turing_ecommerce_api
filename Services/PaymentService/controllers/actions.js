@@ -8,6 +8,7 @@
 const { validationResult } = require("express-validator/check");
 const logger = require("config/winston");
 const Payment = require("../models/payment");
+
 const config = require("../../../config");
 const stripe = require("stripe")(config.payment.secret_key);
 const actions = {};

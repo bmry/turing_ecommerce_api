@@ -40,29 +40,40 @@ function paginate(page, limit) {
 // GET all products and paginate the result
 actions.getProducts = (req, res) => {
 
-  logger.debug(paginate(page,limit));
-
   const { limit, page } = req.query;
   const { _limit, offset } = paginate(page, limit);
   const pageOptions = {
     limit: _limit,
     offset,
   };
-  model.getProducts(pageOptions, (err, products, count) => {
-    if (err) {
-      logger.error(err.sqlMessage);
-      return res.status(500).json({
-        success: false,
-        auth: false,
-        message: err.sqlMessage,
-      });
-    }
-    res.status(200).json({
-      success: true,
-      count,
-      products,
-    });
+
+   model.getProductsCount((err, products, totalCount) => {
+        if (err) {
+            logger.error(err.sqlMessage);
+            return res.status(500).json({
+                success: false,
+                auth: false,
+                message: err.sqlMessage,
+            });
+        }
+
+       model.getProducts(pageOptions, (err, products, count) => {
+           if (err) {
+               logger.error(err.sqlMessage);
+               return res.status(500).json({
+                   success: false,
+                   auth: false,
+                   message: err.sqlMessage,
+               });
+           }
+           res.status(200).json({
+               success: true,
+               totalCount,
+               products,
+           });
+       });
   });
+
 };
 
 // GET product item information/detal
@@ -103,20 +114,29 @@ actions.filterProducts = (req, res) => {
     offset,
     limit: _limit,
   };
-  model.filterProducts(pageOptions, (err, products, count) => {
-    if (err) {
-      logger.error(err.sqlMessage);
-      return res.status(500).json({
-        success: false,
-        message: err.sqlMessage,
-      });
-    }
-    res.status(200).json({
-      success: true,
-      count,
-      products,
+    model.getProductsCount((err, products, totalCount) => {
+        if (err) {
+            logger.error(err.sqlMessage);
+            return res.status(500).json({
+                success: false,
+                auth: false,
+                message: err.sqlMessage,
+            });
+        }
+        model.filterProducts(pageOptions, (err, products, count) => {
+            if (err) {
+                logger.error(err.sqlMessage);
+                return res.status(500).json({
+                    success: false,
+                    message: err.sqlMessage,
+                });
+            }
+            res.status(200).json({
+                totalCount,
+                products,
+            });
+        });
     });
-  });
 };
 
 // GET a list of products in a category and paginate the result
@@ -131,20 +151,29 @@ actions.getProductsCategory = (req, res) => {
   };
   const id = parseInt(category_id, 10);
   if (category_id && !isNaN(id)) {
-    model.getProductsCategory(pageOptions, (err, products, count) => {
-      if (err) {
-        logger.error(err.sqlMessage);
-        return res.status(500).json({
-          success: false,
-          message: err.sqlMessage,
-        });
-      }
-      res.status(200).json({
-        success: true,
-        count,
-        products,
+      model.getProductsCount((err, products, totalCount) => {
+          if (err) {
+              logger.error(err.sqlMessage);
+              return res.status(500).json({
+                  success: false,
+                  auth: false,
+                  message: err.sqlMessage,
+              });
+          }
+          model.getProductsCategory(pageOptions, (err, products, count) => {
+              if (err) {
+                  logger.error(err.sqlMessage);
+                  return res.status(500).json({
+                      success: false,
+                      message: err.sqlMessage,
+                  });
+              }
+              res.status(200).json({
+                  totalCount,
+                  rows: products,
+              });
+          });
       });
-    });
   } else {
     res.status(500).json({
       success: false,
@@ -165,20 +194,31 @@ actions.getProductsDepartment = (req, res) => {
   };
   const id = parseInt(department_id, 10);
   if (department_id && !isNaN(id)) {
-    model.getProductsDepartment(pageOptions, (err, products, count) => {
-      if (err) {
-        logger.error(err.sqlMessage);
-        return res.status(500).json({
-          success: false,
-          message: err.sqlMessage,
-        });
-      }
-      res.status(200).json({
-        success: true,
-        count,
-        products,
+
+      model.getProductsCount((err, products, totalCount) => {
+          if (err) {
+              logger.error(err.sqlMessage);
+              return res.status(500).json({
+                  success: false,
+                  auth: false,
+                  message: err.sqlMessage,
+              });
+          }
+
+          model.getProductsDepartment(pageOptions, (err, products, count) => {
+              if (err) {
+                  logger.error(err.sqlMessage);
+                  return res.status(500).json({
+                      success: false,
+                      message: err.sqlMessage,
+                  });
+              }
+              res.status(200).json({
+                  totalCount,
+                  products,
+              });
+          });
       });
-    });
   } else {
     res.status(500).json({
       success: false,
@@ -203,20 +243,29 @@ actions.searchProducts = (req, res) => {
       limit: _limit,
       offset,
     };
-    model.searchProduct(filterParams, (err, products, count) => {
-      if (err) {
-        logger.error(err.sqlMessage);
-        return res.status(500).json({
-          success: false,
-          message: err.sqlMessage,
-        });
-      }
-      res.status(200).json({
-        success: true,
-        count,
-        products,
+      model.getProductsCount((err, products, totalCount) => {
+          if (err) {
+              logger.error(err.sqlMessage);
+              return res.status(500).json({
+                  success: false,
+                  auth: false,
+                  message: err.sqlMessage,
+              });
+          }
+          model.searchProduct(filterParams, (err, products, count) => {
+              if (err) {
+                  logger.error(err.sqlMessage);
+                  return res.status(500).json({
+                      success: false,
+                      message: err.sqlMessage,
+                  });
+              }
+              res.status(200).json({
+                  count: totalCount,
+                  rows: products,
+              });
+          });
       });
-    });
   } else {
     res.status(400).json({
       success: false,
@@ -666,5 +715,6 @@ actions.getProductAttributes = (req, res) => {
     });
   }
 };
+
 
 module.exports = actions;

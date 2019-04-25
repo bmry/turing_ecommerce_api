@@ -29,6 +29,27 @@ class Product {
 
   /**
    *
+   * @description - GET total products count
+   * @param {object} pageOptions
+   * @param {function} callback
+   * @memberof Products
+   */
+  async getProductsCount(callback) {
+    const query = "SELECT * FROM product";
+    sql.query(query, [], (err, products) => {
+      if (err) {
+        return callback(err, null);
+      }
+      console.log("DBCount: "+products.length);
+      return callback(null, products, products.length);
+    });
+  }
+
+
+
+
+  /**
+   *
    * @description - Filter product items by department and category
    * @param {object} filterParams
    * @param {function} callback
@@ -57,8 +78,8 @@ class Product {
    */
   searchProduct(filterParams, callback) {
     const { search_term, limit, offset } = filterParams;
-    const params = [`${search_term}%`, limit, offset];
-    const query = "SELECT * FROM product WHERE name LIKE ? LIMIT ? OFFSET ?";
+    const params = [`${search_term}%`, `${search_term}%`, limit, offset];
+    const query = "SELECT * FROM product WHERE name LIKE ? OR description LIKE ? LIMIT ? OFFSET ?";
     sql.query(query, params, (err, products) => {
       if (err) {
         return callback(err, null);

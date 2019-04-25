@@ -35,9 +35,8 @@ class Order {
    * @memberof Orders
    */
   getOrder(options, callback) {
-    const { order_id, customer_id } = options;
-    const params = [order_id, customer_id];
-    const query = "SELECT * FROM orders WHERE order_id = ? AND customer_id = ?";
+    const params = options;
+    const query = "SELECT * FROM orders WHERE order_id = ?";
     sql.query(query, params, (err, order) => {
       if (err) {
         return callback(err, null);
@@ -75,10 +74,10 @@ class Order {
    */
   addOrder(orderData, callback) {
     const {
-      total_amount, created, customer_id, shipping_id, reference,
+      total_amount, created, customer_id, shipping_id, reference,tax_id
     } = orderData;
-    const params = [total_amount, created, "active", customer_id, shipping_id, reference];
-    const query = "INSERT INTO orders (total_amount, created_on, status, customer_id, shipping_id, reference) VALUES (?, ?, ?, ?, ?, ?)";
+    const params = [total_amount, created, "active", customer_id, shipping_id, reference, tax_id];
+    const query = "INSERT INTO orders (total_amount, created_on, status, customer_id, shipping_id, reference, tax_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
     sql.query(query, params, (err, result) => {
       if (err) {
         return callback(err, null);
@@ -126,6 +125,33 @@ class Order {
       return callback(null, result);
     });
   }
-}
 
+/**
+ *
+ * @description - Update order
+ * @param order_id
+ * @param {object} data
+ * @param callback
+ * @param {function} callback
+ * @memberof Order
+ */
+updateOrderStatus(data, callback) {
+        const {
+        order_id,
+        status,
+    } = data;
+    const params = [
+        order_id,
+        status,
+    ];
+    const query = "UPDATE orders SET status = ? WHERE order_id = ?";
+    sql.query(query, params, (err, result) => {
+        if (err) {
+            return callback(err, null);
+        }
+
+        return callback(null, result);
+    });
+}
+}
 module.exports = Order;

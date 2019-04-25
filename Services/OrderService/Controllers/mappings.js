@@ -25,6 +25,8 @@ router.get("/getOrders", checkAndVerifyToken, actions.getOrders);
 
 router.post("/sendOrderDetails", checkAndVerifyToken, validator.validateSendOrderDetails, actions.sendOrderDetailToCustomer);
 
+router.post("/updateOrderStatus", checkAndVerifyToken, validator.validateUpdateOrderStatus, actions.updateOrderStatus);
+
 router.put(
   "/cancelOrder/:order_id([0-9]+)",
   validator.validateCancelOrder,

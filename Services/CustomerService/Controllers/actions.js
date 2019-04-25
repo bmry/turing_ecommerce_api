@@ -42,10 +42,22 @@ actions.registerCustomer = async (req, res) => {
           message: "The email is already registered. Please choose another one.",
         });
       }
-      res.status(201).json({
-        success: true,
-        message: "Account created successfully",
-      });
+
+        model.getSingleCustomerByEmail(req.body.email,(err, customer) => {
+
+            const token = jwt.sign(
+                { id: customer.insertId, email: req.body.email },
+                config.jwt.secret,
+                {
+                    expiresIn: 86400, // expires in 24 hours
+                },
+            );
+            res.status(200).json({
+                customer,
+                token,
+
+            });
+        });
     });
   } else {
     res.status(400).json({
@@ -100,12 +112,13 @@ actions.login = (req, res) => {
           expiresIn: 86400, // expires in 24 hours
         },
       );
-      res.status(200).json({
-        success: true,
-        auth: true,
-        token,
-        message: "Login successful",
-      });
+        model.getSingleCustomerByEmail(customer[0].email,(err, customer) => {
+            res.status(200).json({
+                customer: customer,
+                token,
+                expires_in: "24h",
+            });
+        });
     } else {
       res.status(400).json({
         success: false,
@@ -117,7 +130,6 @@ actions.login = (req, res) => {
 };
 
 actions.updateProfile = (req, res) => {
-  let errorMessage;
   const errors = validationResult(req)
     .array()
     .map((error) => {
@@ -125,9 +137,8 @@ actions.updateProfile = (req, res) => {
     });
 
   if (errors.length < 1) {
-    const { customer_id } = req.params;
     req.body.customer_id = req.decoded.id;
-    model.updateProfile(customer_id, req.body, (err, message) => {
+    model.updateProfile(req.body, (err, message) => {
       if (err) {
         logger.error(err.sqlMessage);
         return res.status(500).json({
@@ -136,10 +147,11 @@ actions.updateProfile = (req, res) => {
           message: err.sqlMessage,
         });
       }
-      model.getSingleCustomer(customer_id,(err, customer) => {
+
+      model.getSingleCustomerById(req.body.customer_id, (err, customer) => {
+        console.log(err);
           res.status(200).json({
-              success: true,
-              message: customer,
+              customer,
           });
       });
     });
@@ -194,6 +206,8 @@ actions.getToken = (req, res) => {
     });
   });
 };
+
+
 
 
 
