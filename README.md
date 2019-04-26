@@ -25,9 +25,9 @@ This is the backend of Turing's E-commerce System which ultimately allows users 
   - Start application
     
    
-    yarn start   
+     Run "yarn start"   
     
-   - Add Database Configuration in config/index.js file.
+ 
 
 
 **ARCHITECTURE**
