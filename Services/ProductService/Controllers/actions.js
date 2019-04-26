@@ -81,7 +81,7 @@ actions.getProduct = (req, res) => {
   const { product_id } = req.params;
   const id = parseInt(product_id, 10);
   if (product_id && !isNaN(id)) {
-    model.getProduct(id, (err, product) => {
+    model.getProduct(id, (err, result) => {
       if (err) {
         logger.error(err.sqlMessage);
         return res.status(500).json({
@@ -89,8 +89,10 @@ actions.getProduct = (req, res) => {
           message: err.sqlMessage,
         });
       }
+
+      let product = result[0];
+      console.log(product);
       res.status(200).json({
-        success: true,
         product,
       });
     });
@@ -185,16 +187,6 @@ actions.getProductsDepartment = (req, res) => {
   const id = parseInt(department_id, 10);
   if (department_id && !isNaN(id)) {
 
-      model.getProductsCount((err, products, totalCount) => {
-          if (err) {
-              logger.error(err.sqlMessage);
-              return res.status(500).json({
-                  success: false,
-                  auth: false,
-                  message: err.sqlMessage,
-              });
-          }
-
           model.getProductsDepartment(pageOptions, (err, products, count) => {
               if (err) {
                   logger.error(err.sqlMessage);
@@ -204,11 +196,10 @@ actions.getProductsDepartment = (req, res) => {
                   });
               }
               res.status(200).json({
-                  totalCount,
+                  count,
                   products,
               });
           });
-      });
   } else {
     res.status(500).json({
       success: false,
