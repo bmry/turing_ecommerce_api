@@ -19,9 +19,9 @@ router.post("/addOrderDetails", validator.validateNewOrderDetails, checkAndVerif
 
 router.get("/:order_id([0-9]+)", checkAndVerifyToken, cache, actions.getOrderFullDetails);
 
-router.get("/shortDetail/:order_id([0-9]+)", checkAndVerifyToken, actions.getOrderShortDetail);
+router.get("/shortDetail/:order_id([0-9]+)",cache, checkAndVerifyToken, actions.getOrderShortDetails);
 
-router.get("/", checkAndVerifyToken, actions.getOrders);
+router.get("/", checkAndVerifyToken, cache, actions.getOrders);
 
 router.post("/sendOrderDetails", checkAndVerifyToken, validator.validateSendOrderDetails, actions.sendOrderDetailToCustomer);
 

@@ -13,7 +13,7 @@ const ShoppingCart = require("../../ShoppingCartService/Models/shoppingcart");
 
 const actions = {};
 const model = new Orders();
-const cartModel = new ShoppingCart()
+const cartModel = new ShoppingCart();
 
 // Function to calculate offset for pagination
 function paginate(page, limit) {
@@ -80,12 +80,14 @@ actions.getOrders = (req, res) => {
 };
 
 //GET order information
-actions.getOrderShortDetail = (req, res) => {
+actions.getOrderShortDetails = (req, res) => {
     const { order_id } = req.params;
     const id = parseInt(order_id, 10);
     const params = {
         order_id: id
     };
+    console.log("hERE"+req.params);
+
     if (order_id && !isNaN(id)) {
         model.getOrder(params, (err, order) => {
             if (err) {
@@ -233,7 +235,7 @@ actions.addOrder = (req, res) => {
               }
               model.getOrder(result.insertId,(err, order) => {
                   res.status(201).json({
-                      orderId: order[0].order_id,
+                      orderId: result.insertId,
 
                   });
               });

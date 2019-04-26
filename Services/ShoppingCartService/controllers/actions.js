@@ -155,7 +155,6 @@ actions.removeProductFromCart = (req, res) => {
             message: errorMessage,
         });
     }
-
 };
 
 actions.generateUniqueId = (req, res) => {

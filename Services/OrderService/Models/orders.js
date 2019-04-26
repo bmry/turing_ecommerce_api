@@ -18,7 +18,7 @@ class Order {
   getOrders(pageOptions, callback) {
     const { customer_id, offset, limit } = pageOptions;
     const params = [customer_id, limit, offset];
-    const query = "SELECT * FROM orders WHERE customer_id = ? LIMIT ? OFFSET ?";
+    const query = "SELECT * FROM orders WHERE customer_id = ?  ORDER BY order_id DESC LIMIT ? OFFSET ? ";
     sql.query(query, params, (err, orders) => {
       if (err) {
         return callback(err, null);
