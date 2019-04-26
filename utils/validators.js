@@ -223,20 +223,6 @@ export const validateNewItem = [
     .not()
     .isEmpty()
     .withMessage("Attribute cannot be empty"),
-
-  check("quantity")
-    .isNumeric()
-    .withMessage("Quantity must be an integer")
-    .not()
-    .isEmpty()
-    .withMessage("Quantity cannot be empty"),
-
-  check("buy_now")
-    .isNumeric()
-    .withMessage("`Buy now` must be an integer")
-    .not()
-    .isEmpty()
-    .withMessage("`Buy now` field is required"),
 ];
 
 export const validateNewPayment = [

@@ -18,4 +18,8 @@ router.get("/emptyUnusedCart",checkAndVerifyToken, actions.emptyUnusedCart);
 
 router.get("/generateUniqueId", checkAndVerifyToken, actions.generateUniqueId);
 
+router.get("/removeProduct/:item_id([0-9]+)", checkAndVerifyToken, actions.removeProductFromCart);
+
+router.get("/:cart_id", checkAndVerifyToken, actions.listCartItems);
+
 module.exports = router;
