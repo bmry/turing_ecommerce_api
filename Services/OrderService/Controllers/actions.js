@@ -84,8 +84,7 @@ actions.getOrderShortDetail = (req, res) => {
     const { order_id } = req.params;
     const id = parseInt(order_id, 10);
     const params = {
-        order_id: id,
-        customer_id: req.decoded.id
+        order_id: id
     };
     if (order_id && !isNaN(id)) {
         model.getOrder(params, (err, order) => {
@@ -97,7 +96,6 @@ actions.getOrderShortDetail = (req, res) => {
                 });
             }
             res.status(200).json({
-                success: true,
                 order
             });
         });
@@ -113,13 +111,16 @@ actions.getOrderShortDetail = (req, res) => {
 // GET order information
 actions.getOrderFullDetails = (req, res) => {
   const { order_id } = req.params;
+  console.log(req.body);
   const id = parseInt(order_id, 10);
   const params = {
     order_id: id
   };
   if (order_id && !isNaN(id)) {
     model.getOrderDetails(params, (err, order) => {
+        console.log("Returning "+ order);
       if (err) {
+          console.log(err);
         logger.error(err.sqlMessage);
         return res.status(500).json({
           success: false,

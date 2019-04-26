@@ -35,7 +35,8 @@ class Order {
    * @memberof Orders
    */
   getOrder(options, callback) {
-    const params = options;
+    const {order_id} = options;
+    const params = [order_id];
     const query = "SELECT * FROM orders WHERE order_id = ?";
     sql.query(query, params, (err, order) => {
       if (err) {
@@ -55,12 +56,13 @@ class Order {
   getOrderDetails(options, callback) {
     const { order_id } = options;
     const params = [order_id];
-    const query = "SELECT * FROM order_detail WHERE order_id = ?";
+    console.log("Order Here"+order_id);
+    const query = "SELECT * FROM orders WHERE order_id = ?";
     sql.query(query, params, (err, order) => {
       if (err) {
         return callback(err, null);
       }
-      return order;
+        return callback(null, order);
     });
   }
 
