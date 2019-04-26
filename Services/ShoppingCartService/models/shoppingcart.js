@@ -85,6 +85,25 @@ class ShoppingCart {
     });
   }
 
+
+  /**
+   *
+   * @description - Get total price of product in a cart
+   * @param {number} cart_id
+   * @param {function} callback
+   * @memberof ShoppingCart
+   */
+  shoppingCartProductsTotalPrice(cart_id, callback) {
+    const params = [cart_id];
+    const query = "SELECT SC.cart_id AS cart_id, CAST(SUM(price * quantity) AS CHAR) as subtotal FROM shopping_cart as SC JOIN product as P ON (SC.product_id = P.product_id) WHERE cart_id = ?  GROUP BY cart_id ";
+    sql.query(query, params, (err, result) => {
+      if (err) {
+        return callback(err, null);
+      }
+      return callback(null, result);
+    });
+  }
+
   /**
    *
    *@description - Empty unused cart

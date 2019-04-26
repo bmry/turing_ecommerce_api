@@ -81,8 +81,6 @@ actions.listCartItems = (req, res) => {
     };
 
 
-
-
 // Empty cart
 actions.emptyUnusedCart = (req, res) => {
     const errors = validationResult(req)

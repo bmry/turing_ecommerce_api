@@ -78,9 +78,12 @@ class Product {
    */
   searchProduct(filterParams, callback) {
     const { search_term, limit, offset } = filterParams;
-    const params = [`${search_term}%`, `${search_term}%`, limit, offset];
-    const query = "SELECT * FROM product WHERE name LIKE ? OR description LIKE ? LIMIT ? OFFSET ?";
+    const params = [`${search_term}%`, `%${search_term}%`,  limit, offset];
+      
+    console.log(params);
+    const query = "SELECT * FROM product WHERE name LIKE ? OR description regexp '(^|[[:space:]])"+search_term.replace(/\'/gi,'')+"([[:space:]]|$)' OR description LIKE ? LIMIT ? OFFSET ?";
     sql.query(query, params, (err, products) => {
+      console.log(query);
       if (err) {
         return callback(err, null);
       }

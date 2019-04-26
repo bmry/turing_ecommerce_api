@@ -9,9 +9,11 @@ const { validationResult } = require("express-validator/check");
 const { sendMail } = require("utils/mailer");
 const logger = require("config/winston");
 const Orders = require("../Models/orders");
+const ShoppingCart = require("../../ShoppingCartService/Models/shoppingcart");
 
 const actions = {};
 const model = new Orders();
+const cartModel = new ShoppingCart()
 
 // Function to calculate offset for pagination
 function paginate(page, limit) {
@@ -59,6 +61,7 @@ actions.getOrders = (req, res) => {
     offset,
     customer_id: req.decoded.id,
   };
+
   model.getOrders(pageOptions, (err, orders, count) => {
     if (err) {
       logger.error(err.sqlMessage);
@@ -208,25 +211,35 @@ actions.addOrder = (req, res) => {
   req.body.created = new Date();
   req.body.reference = generate_random_string(5);
   req.body.customer_id = req.decoded.id;
-  console.log(req.body);
   if (errors.length < 1) {
-    model.addOrder(req.body, (err, result) => {
-      if (err) {
-        logger.error(err.sqlMessage);
-        return res.status(500).json({
-          success: false,
-          message: err.sqlMessage,
-        });
-      }
-        model.getOrder(result.insertId,(err, order) => {
-            res.status(201).json({
-                success: true,
-                order,
-                message: "Order created successfully",
-            });
-        });
+      cartModel.shoppingCartProductsTotalPrice(req.body.cart_id, (err, cart) => {
 
-    });
+          if (err) {
+              logger.error(err.sqlMessage);
+              return res.status(500).json({
+                  success: false,
+                  message: err.sqlMessage,
+              });
+          }
+          req.body.total_amount = cart[0].subtotal;
+          model.addOrder(req.body, (err, result) => {
+              if (err) {
+                  logger.error(err.sqlMessage);
+                  return res.status(500).json({
+                      success: false,
+                      message: err.sqlMessage,
+                  });
+              }
+              model.getOrder(result.insertId,(err, order) => {
+                  res.status(201).json({
+                      orderId: order[0].order_id,
+
+                  });
+              });
+
+          });
+      });
+
   } else {
     res.status(400).json({
       success: false,

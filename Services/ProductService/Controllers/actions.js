@@ -243,16 +243,8 @@ actions.searchProducts = (req, res) => {
       limit: _limit,
       offset,
     };
-      model.getProductsCount((err, products, totalCount) => {
-          if (err) {
-              logger.error(err.sqlMessage);
-              return res.status(500).json({
-                  success: false,
-                  auth: false,
-                  message: err.sqlMessage,
-              });
-          }
-          model.searchProduct(filterParams, (err, products, count) => {
+
+    model.searchProduct(filterParams, (err, products, count) => {
               if (err) {
                   logger.error(err.sqlMessage);
                   return res.status(500).json({
@@ -261,11 +253,10 @@ actions.searchProducts = (req, res) => {
                   });
               }
               res.status(200).json({
-                  count: totalCount,
+                  count: count,
                   rows: products,
               });
           });
-      });
   } else {
     res.status(400).json({
       success: false,

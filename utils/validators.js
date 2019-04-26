@@ -121,11 +121,10 @@ export const validateNewProduct = [
 ];
 
 export const validateNewOrder = [
-  check("total_amount")
+  check("cart_id")
     .not()
     .isEmpty()
-    .isNumeric()
-    .withMessage("Total amount should be numeric"),
+    .withMessage("Cart ID is required"),
 
   check("shipping_id")
     .not()
@@ -233,9 +232,10 @@ export const validateNewPayment = [
     .isNumeric()
     .withMessage("Amount should be numeric"),
 
-  // check("currency")
-  //   .isCurrency()
-  //   .withMessage("Should be a currency"),
+  check("description")
+    .not()
+    .isEmpty()
+    .withMessage("Description cannot be empty"),
 
   check("order_id")
     .not()

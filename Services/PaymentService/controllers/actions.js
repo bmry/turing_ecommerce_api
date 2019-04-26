@@ -16,7 +16,7 @@ const model = new Payment()
 
 actions.makePayment = (req, res) => {
   let errorMessage;
-  const { amount, currency } = req.body;
+  const { amount, currency, description } = req.body;
   const currency_ = currency || "USD";
   const errors = validationResult(req)
     .array()
@@ -31,7 +31,7 @@ actions.makePayment = (req, res) => {
         amount,
         currency: currency_,
         source: "tok_mastercard", // obtained with Stripe.js
-        description: "Charge for ECommerce API",
+        description
       },
       (err, charge) => {
         if (err) {
