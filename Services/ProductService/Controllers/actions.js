@@ -91,7 +91,6 @@ actions.getProduct = (req, res) => {
       }
 
       let product = result[0];
-      console.log(product);
       res.status(200).json({
         product,
       });
@@ -143,15 +142,6 @@ actions.getProductsCategory = (req, res) => {
   };
   const id = parseInt(category_id, 10);
   if (category_id && !isNaN(id)) {
-      model.getProductsCount((err, products, totalCount) => {
-          if (err) {
-              logger.error(err.sqlMessage);
-              return res.status(500).json({
-                  success: false,
-                  auth: false,
-                  message: err.sqlMessage,
-              });
-          }
           model.getProductsCategory(pageOptions, (err, products, count) => {
               if (err) {
                   logger.error(err.sqlMessage);
@@ -161,11 +151,10 @@ actions.getProductsCategory = (req, res) => {
                   });
               }
               res.status(200).json({
-                  totalCount,
+                  count,
                   rows: products,
               });
           });
-      });
   } else {
     res.status(500).json({
       success: false,
