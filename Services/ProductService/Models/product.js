@@ -34,13 +34,13 @@ class Product {
    * @param {function} callback
    * @memberof Products
    */
-  async getProductsCount(callback) {
-    const query = "SELECT * FROM product";
+  getProductsCount(callback) {
+    const query = "SELECT count(*) FROM product";
     sql.query(query, [], (err, products) => {
       if (err) {
         return callback(err, null);
       }
-      console.log("DBCount: "+products.length);
+      console.log(products);
       return callback(null, products, products.length);
     });
   }
@@ -78,8 +78,8 @@ class Product {
    */
   searchProduct(filterParams, callback) {
     const { search_term, limit, offset } = filterParams;
-    const params = [`${search_term}%`, `%${search_term}%`,  limit, offset];
-    const query = "SELECT * FROM product WHERE name LIKE ? OR description regexp '(^|[[:space:]])"+search_term.replace(/\'/gi,'')+"([[:space:]]|$)' OR description LIKE ? LIMIT ? OFFSET ?";
+    const params = [`${search_term}%`,  limit, offset];
+    const query = "SELECT * FROM product WHERE name LIKE ? OR description regexp '(^|[[:space:]])"+search_term.replace(/\'/gi,'')+"([[:space:]]|$)' LIMIT ? OFFSET ?";
     sql.query(query, params, (err, products) => {
       if (err) {
         return callback(err, null);
