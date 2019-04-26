@@ -35,12 +35,12 @@ class Product {
    * @memberof Products
    */
   getProductsCount(callback) {
-    const query = "SELECT count(*) FROM product";
+    const query = "SELECT * FROM product";
     sql.query(query, [], (err, products) => {
       if (err) {
         return callback(err, null);
       }
-      console.log(products);
+      console.log("DBCount"+products.length);
       return callback(null, products, products.length);
     });
   }

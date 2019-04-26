@@ -114,15 +114,6 @@ actions.filterProducts = (req, res) => {
     offset,
     limit: _limit,
   };
-    model.getProductsCount((err, products, totalCount) => {
-        if (err) {
-            logger.error(err.sqlMessage);
-            return res.status(500).json({
-                success: false,
-                auth: false,
-                message: err.sqlMessage,
-            });
-        }
         model.filterProducts(pageOptions, (err, products, count) => {
             if (err) {
                 logger.error(err.sqlMessage);
@@ -132,11 +123,10 @@ actions.filterProducts = (req, res) => {
                 });
             }
             res.status(200).json({
-                totalCount,
+                count,
                 products,
             });
         });
-    });
 };
 
 // GET a list of products in a category and paginate the result
