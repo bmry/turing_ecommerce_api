@@ -20,6 +20,8 @@ This is the backend of Turing's E-commerce System which ultimately allows users 
     
     yarn
     
+  - Provide enviroment variable such as Database Host e.t.c in .env file you will find in the root directory.
+  
   - Start application
     
    
